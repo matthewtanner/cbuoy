@@ -2,10 +2,10 @@ LIBDIR		:= lib
 TESTDIR		:= test
 SRCDIR		:= src
 INCDIR		:= include
-LIBTGT		:= $(LIBDIR)/libcbuoy.a
-TESTTGT		:= $(TESTDIR)/test_cbuoy
+LIBTGT		:= $(LIBDIR)/libndbcc.a
+TESTTGT		:= $(TESTDIR)/test_ndbcc
 INCLUDES    := -I$(SRCDIR) -I$(INCDIR)
-TESTLIBS    := -L$(LIBDIR) -lcbuoy -lcurl
+TESTLIBS    := -L$(LIBDIR) -lndbcc -lcurl
 CC			:= gcc
 CFLAGS		:= -Wall
 
@@ -16,14 +16,14 @@ lib: $(LIBTGT)
 $(TESTTGT): $(LIBTGT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TESTTGT).c $(TESTLIBS) -o $(TESTTGT)
 
-$(LIBTGT): $(LIBDIR)/cbuoy.o $(INCDIR)/cbuoy.h
-	ar rcs $(LIBTGT) $(LIBDIR)/cbuoy.o
+$(LIBTGT): $(LIBDIR)/ndbcc.o $(INCDIR)/ndbcc.h
+	ar rcs $(LIBTGT) $(LIBDIR)/ndbcc.o
 
-$(LIBDIR)/cbuoy.o: 
-	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRCDIR)/cbuoy.c -o $(LIBDIR)/cbuoy.o
+$(LIBDIR)/ndbcc.o: 
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRCDIR)/ndbcc.c -o $(LIBDIR)/ndbcc.o
 
 clean:
+	rm -f $(LIBDIR)/*.a
 	rm -f $(LIBDIR)/*.o
-	rm -f $(LIBTGT)
 	rm -f $(TESTDIR)/*.o
 	rm -f $(TESTTGT)

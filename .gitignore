@@ -1,0 +1,6 @@
+test_ndbcc
+obe
+*.swp
+*~
+*.o
+*.a

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <cbuoy.h>
+#include <ndbcc.h>
 
 int main(int argc, char *argv[])
 {

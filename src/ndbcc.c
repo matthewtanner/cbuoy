@@ -27,7 +27,7 @@
 *
 * @author Matthew Tanner
 ******************************************************************************/
-#include <cbuoy.h>
+#include <ndbcc.h>
 
 
 const float BUOYDATA_NOT_AVAIL = -998;
