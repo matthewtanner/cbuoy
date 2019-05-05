@@ -9,10 +9,10 @@
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -94,14 +94,13 @@ typedef enum
     CWIND_DATA_GTIME,
     NUM_CWIND_ELEMENTS
 } cwind_data_index_t;
-    
+
 typedef struct
 {
-    uint16_t station_id; 
-    float    txt_data[NUM_TXT_ELEMENTS];
-    float    spec_data[NUM_SPEC_ELEMENTS];
-    float    cwind_data[NUM_CWIND_ELEMENTS];
-        
+    uint16_t station_id;
+    float txt_data[NUM_TXT_ELEMENTS];
+    float spec_data[NUM_SPEC_ELEMENTS];
+    float cwind_data[NUM_CWIND_ELEMENTS];
 } ndbc_data_t;
 
 int32_t cbuoy_get_data(ndbc_data_t *data);
