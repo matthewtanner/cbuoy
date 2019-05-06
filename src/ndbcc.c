@@ -27,27 +27,153 @@
 *
 * @author Matthew Tanner
 ******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <curl/curl.h>
+
 #include <ndbcc.h>
 
-const float BUOYDATA_NOT_AVAIL  = -998;
-const float BUOYDATA_ERROR      = -999;
-const char *NDBC_REALDATA_URL   = "https://www.ndbc.noaa.gov/data/realtime2/";
+const uint32_t	HTTP_RCVBUF_MIN_SIZE  = (120 * 5);
+const float		BUOYDATA_NOT_AVAIL	  = -998;
+const float		BUOYDATA_ERROR		  = -999;
+const uint16_t	SINGLE_QUERY_STR_SIZE = 1024;
 
-int32_t parse_ndbcdata_string ()
+const uint8_t  URL_SIZE		= 255;
+const char	  *URL_STR_TXT	= "txt";
+const char	  *URL_STR_SPEC = "spec";
+const char	  *URL_STR_CWIND	 = "cwind";
+const char	  *NDBC_REALDATA_URL =
+    "https://www.ndbc.noaa.gov/data/realtime2/";
+
+
+typedef struct
+{
+    char *ptr;
+    size_t len;
+} dyn_string_t;
+
+
+int32_t parse_ndbc_data(ndbc_data_t *ndbc_data, dyn_string_t response_str)
 {
     return 0;
 }
 
 
-int32_t fetch_ndbcdata_string ()
+size_t write_callback(void *data, size_t size, size_t nmemb, void *userptr)
 {
+    char		 *temp_ptr;
+    dyn_string_t *string	= (dyn_string_t*)userptr;
+    size_t		  data_size = size * nmemb;
+
+    temp_ptr = realloc(string->ptr, string->len + data_size + 1);
+    if (temp_ptr == NULL)
+    {
+        return 0;
+    }
+
+    string->ptr = temp_ptr;
+    memcpy(&(string->ptr[string->len]), data, data_size);
+    string->len += data_size;
+    string->ptr[string->len] = 0;
+
+    return data_size;
+}
+
+
+int32_t build_ndbc_url(char* strbuf, uint16_t station_id,
+                       ndbc_data_set_t data_set)
+{
+    switch (data_set)
+    {
+        case NDBC_DATA_SET_TXT:
+            snprintf(strbuf, URL_SIZE, "%s%u.%s", NDBC_REALDATA_URL,
+                     station_id, URL_STR_TXT);
+            break;
+        case NDBC_DATA_SET_SPEC:
+            snprintf(strbuf, URL_SIZE, "%s%u.%s", NDBC_REALDATA_URL,
+                     station_id, URL_STR_SPEC);
+            break;
+        case NDBC_DATA_SET_CWIND:
+            snprintf(strbuf, URL_SIZE, "%s%u.%s", NDBC_REALDATA_URL,
+                     station_id, URL_STR_CWIND);
+            break;
+        default:
+            return -1;
+    }
     return 0;
 }
 
 
-int32_t cbuoy_get_data (ndbc_data_t *data)
+int32_t fetch_ndbc_data (ndbc_data_t *ndbc_data, ndbc_data_set_t data_set)
 {
-    printf("fetch\n");
+    CURL		 *p_curl;
+    CURLcode	  res;
+    char		  request_url[URL_SIZE];
+    dyn_string_t  response_str;
+    int32_t		  status;
+
+    response_str.ptr = NULL;
+    response_str.len = 0;
+    response_str.ptr = malloc(1);
+    if (response_str.ptr == NULL)
+    {
+        return -1;
+    }
+
+    status = build_ndbc_url(request_url, ndbc_data->station_id, data_set);
+    if (status < 0)
+    {
+        free(response_str.ptr);
+        return -1;
+    }
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    p_curl = curl_easy_init();
+    curl_easy_setopt(p_curl, CURLOPT_URL, request_url);
+    curl_easy_setopt(p_curl, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(p_curl, CURLOPT_WRITEDATA, (void *)&response_str);
+    res = curl_easy_perform(p_curl);
+    if (res != CURLE_OK)
+    {
+        printf("res: %d\n", res);
+        free(response_str.ptr);
+        return -1;
+    }
+
+    status = parse_ndbc_data(ndbc_data, response_str);
+
+    printf("%s\n", response_str.ptr);
+
+    free(response_str.ptr);
+    return status;
+}
+
+
+int32_t ndbcc_get_data (ndbc_data_t *data)
+{
+    int32_t  status;
+
+    /* Fetch txt data */
+    status = fetch_ndbc_data(data, NDBC_DATA_SET_TXT);
+    if (status < 0)
+    {
+        printf("Error fetching txt data\n");
+    }
+
+    /* Fetch spec data */
+    status = fetch_ndbc_data(data, NDBC_DATA_SET_SPEC);
+    if (status < 0)
+    {
+        printf("Error fetching txt data\n");
+    }
+
+    /* Fetch cwind data */
+    status = fetch_ndbc_data(data, NDBC_DATA_SET_CWIND);
+    if (status < 0)
+    {
+        printf("Error fetching txt data\n");
+    }
 
     return 0;
 }

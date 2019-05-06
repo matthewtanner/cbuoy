@@ -33,8 +33,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-extern const float BUOYDATA_NOT_AVAILABLE;
-extern const float BUOYDATA_ERROR;
+extern const float	BUOYDATA_NOT_AVAILABLE;
+extern const float	BUOYDATA_ERROR;
 
 typedef enum
 {
@@ -95,6 +95,13 @@ typedef enum
     NUM_CWIND_ELEMENTS
 } cwind_data_index_t;
 
+typedef enum
+{
+    NDBC_DATA_SET_TXT,
+    NDBC_DATA_SET_SPEC,
+    NDBC_DATA_SET_CWIND
+} ndbc_data_set_t;
+
 typedef struct
 {
     uint16_t station_id;
@@ -103,6 +110,6 @@ typedef struct
     float cwind_data[NUM_CWIND_ELEMENTS];
 } ndbc_data_t;
 
-int32_t cbuoy_get_data(ndbc_data_t *data);
+int32_t ndbcc_get_data(ndbc_data_t *data);
 
 #endif /* __CBUOY_H__ */
