@@ -105,11 +105,13 @@ typedef enum
 typedef struct
 {
     uint16_t station_id;
+    uint8_t hour_offset;
     float txt_data[NUM_TXT_ELEMENTS];
     float spec_data[NUM_SPEC_ELEMENTS];
     float cwind_data[NUM_CWIND_ELEMENTS];
 } ndbc_data_t;
 
-int32_t ndbcc_get_data(ndbc_data_t *data);
+int32_t ndbcc_get_data(ndbc_data_t *data, ndbc_data_set_t data_set);
+int32_t ndbcc_get_all_data(ndbc_data_t *data);
 
 #endif /* __CBUOY_H__ */

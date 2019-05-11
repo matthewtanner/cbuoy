@@ -54,8 +54,64 @@ typedef struct
 } dyn_string_t;
 
 
-int32_t parse_ndbc_data(ndbc_data_t *ndbc_data, dyn_string_t response_str)
+int32_t parse_ndbc_data(ndbc_data_t *ndbc_data, dyn_string_t response_str,
+                        ndbc_data_set_t data_set)
 {
+    float		  *data;
+    const uint8_t  MAX_COLUMN_STR_SIZE = 16;
+    uint8_t		   num_elements, column, i;
+    char		  *str_token, *line;
+    char		   tmp_str[MAX_COLUMN_STR_SIZE];
+    float		   temp_val;
+    char		  *temp1, *temp2, *nptr;
+
+    switch (data_set)
+    {
+        case NDBC_DATA_SET_TXT:
+            num_elements = NUM_TXT_ELEMENTS;
+            data = ndbc_data->txt_data;
+            break;
+        case NDBC_DATA_SET_SPEC:
+            num_elements = NUM_SPEC_ELEMENTS;
+            data = ndbc_data->spec_data;
+            break;
+        case NDBC_DATA_SET_CWIND:
+            num_elements = NUM_CWIND_ELEMENTS;
+            data = ndbc_data->cwind_data;
+            break;
+        default:
+            return -1;
+    }
+
+    /* Discard first two line headers */
+    line = strtok_r(response_str.ptr, "\n", &temp1);
+    line = strtok_r(NULL, "\n", &temp1);
+
+    /* Seek to hour offset */
+    for (i= 0; i <= ndbc_data->hour_offset; i++)
+    {
+        line = strtok_r(NULL, "\n", &temp1);
+    }
+
+    /* Parse Columns */
+    str_token = strtok_r(line, " ", &temp2);
+    column	  = 0;
+    while ((str_token != NULL) && (column <= num_elements))
+    {
+        strncpy(tmp_str, str_token, 16);
+        tmp_str[16] = 0;
+        temp_val	= strtof(str_token, &nptr);
+
+        /* String values are not handled yet */
+        if (nptr == str_token)
+        {
+            temp_val = BUOYDATA_ERROR;
+        }
+        data[column] = temp_val;
+        str_token	 = strtok_r(NULL, " ", &temp2);
+        column++;
+    }
+
     return 0;
 }
 
@@ -105,7 +161,7 @@ int32_t build_ndbc_url(char* strbuf, uint16_t station_id,
 }
 
 
-int32_t fetch_ndbc_data (ndbc_data_t *ndbc_data, ndbc_data_set_t data_set)
+int32_t ndbcc_get_data (ndbc_data_t *ndbc_data, ndbc_data_set_t data_set)
 {
     CURL		 *p_curl;
     CURLcode	  res;
@@ -141,35 +197,35 @@ int32_t fetch_ndbc_data (ndbc_data_t *ndbc_data, ndbc_data_set_t data_set)
         return -1;
     }
 
-    status = parse_ndbc_data(ndbc_data, response_str);
+    status = parse_ndbc_data(ndbc_data, response_str, data_set);
 
-    printf("%s\n", response_str.ptr);
+    //printf("%s\n", response_str.ptr);
 
     free(response_str.ptr);
     return status;
 }
 
 
-int32_t ndbcc_get_data (ndbc_data_t *data)
+int32_t ndbcc_get_all_data (ndbc_data_t *data)
 {
     int32_t  status;
 
     /* Fetch txt data */
-    status = fetch_ndbc_data(data, NDBC_DATA_SET_TXT);
+    status = ndbcc_get_data(data, NDBC_DATA_SET_TXT);
     if (status < 0)
     {
         printf("Error fetching txt data\n");
     }
 
     /* Fetch spec data */
-    status = fetch_ndbc_data(data, NDBC_DATA_SET_SPEC);
+    status = ndbcc_get_data(data, NDBC_DATA_SET_SPEC);
     if (status < 0)
     {
         printf("Error fetching txt data\n");
     }
 
     /* Fetch cwind data */
-    status = fetch_ndbc_data(data, NDBC_DATA_SET_CWIND);
+    status = ndbcc_get_data(data, NDBC_DATA_SET_CWIND);
     if (status < 0)
     {
         printf("Error fetching txt data\n");

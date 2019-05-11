@@ -13,7 +13,7 @@ all: $(TESTTGT) $(LIBTGT)
 test: $(TESTTGT)
 lib: $(LIBTGT)
 
-$(TESTTGT): $(LIBTGT)
+$(TESTTGT): $(LIBTGT) $(TESTTGT).c
 	$(CC) $(CFLAGS) $(INCLUDES) $(TESTTGT).c $(TESTLIBS) -o $(TESTTGT)
 
 $(LIBTGT): $(LIBDIR)/ndbcc.o $(INCDIR)/ndbcc.h
