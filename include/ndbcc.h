@@ -23,12 +23,16 @@
 ****************************************************************************//*
 * @file
 *
-* @brief Interface to cbuoy library
+* @brief Interface to ndbc-c library
 *
 * @author Matthew Tanner
 ******************************************************************************/
-#ifndef __CBUOY_H__
-#define __CBUOY_H__
+#ifndef NDBCC_H
+#define NDBCC_H
+
+#ifdef __cplusplus
+extern "C"{
+#endif 
 
 #include <stdint.h>
 #include <stdio.h>
@@ -114,4 +118,8 @@ typedef struct
 int32_t ndbcc_get_data(ndbc_data_t *data, ndbc_data_set_t data_set);
 int32_t ndbcc_get_all_data(ndbc_data_t *data);
 
-#endif /* __CBUOY_H__ */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* NDBCC_H */
