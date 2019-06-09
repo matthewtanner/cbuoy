@@ -123,12 +123,12 @@ Tests should be added to test-ndbcc.c, either directly by calling a function fro
 
 ### Style Guidelines
 
-ndbc-c follows the Embedded C Coding Standard
+ndbc-c follows the Embedded C Coding Standard   
 https://barrgroup.com/Embedded-Systems/Books/Embedded-C-Coding-Standard
 
 ### Code Formatting
 
-The project uses uncrustify to enforce code formatting called out in the Embedded C Coding Standard.
+The project uses uncrustify to enforce code formatting called out in the Embedded C Coding Standard.   
 http://uncrustify.sourceforge.net/
 
 Uncrustify should be run on code before submitting a pull request. This can be done be running 'make format'. 

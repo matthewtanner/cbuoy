@@ -1,0 +1,101 @@
+[33mcommit 8951f815a7f1747b995272ca3d0e875c926ba4ab[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:55:06 2019 -0500
+
+    Add contributing
+
+[33mcommit 6e1d9ec3b35b426d2cb9658fef9ecd7590eaeb74[m
+Merge: c3f8726 0c23d85
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:20:54 2019 -0500
+
+    Merge pull request #2 from matthewtanner/add-code-of-conduct-1
+    
+    Create CODE_OF_CONDUCT.md
+
+[33mcommit 0c23d8568ceba515dc0a70ac727eda163d32ca42[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:20:12 2019 -0500
+
+    Create CODE_OF_CONDUCT.md
+
+[33mcommit c3f8726069fd1e0ba53e4777ab492b37a7763bef[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:12:46 2019 -0500
+
+    Update issue templates
+
+[33mcommit 6eb0395e716b2a0115ec1e5ce272476a6e8c930b[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:04:11 2019 -0500
+
+    update issue template
+
+[33mcommit b960291bfbc105f386013591fc42f3b11c97598e[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Jun 9 00:00:56 2019 -0500
+
+    Update issue templates
+
+[33mcommit 713ee246f7cc627fed1b9e2efbe30b5698680bb5[m
+Merge: 0883f1c dfc422e
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sat Jun 8 23:18:59 2019 -0500
+
+    Merge pull request #1 from matthewtanner/update-cbuoy-references
+    
+    Remove cbuoy references
+
+[33mcommit dfc422efb7de023110f3f335cc21b2aee6e34da7[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sat Jun 8 23:01:09 2019 -0500
+
+    Update testtgt name. Change references of cbuoy to ndbc-c
+
+[33mcommit 0883f1c33638760e220f4e078e20a0d4f9f88115[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sat Jun 8 22:22:48 2019 -0500
+
+    Update readme
+
+[33mcommit 66dca8fb1fa040db263b725dd350055ef4182256[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Fri May 10 22:25:02 2019 -0500
+
+    Basic functionality complete
+
+[33mcommit ecf00e5234783971a3d14f57e8f8e519b474e5b7[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun May 5 23:13:30 2019 -0500
+
+    Added data fetching function using libcurl
+
+[33mcommit 88d6adf97368f986f3194e40c0c588e4eaa04d10[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sat May 4 22:40:14 2019 -0500
+
+    Add uncrustify cfg, code formatting to makefile
+
+[33mcommit a27baf890807d8a94535103be6523cf37febe383[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Apr 28 22:04:20 2019 -0500
+
+    remove obe folder
+
+[33mcommit 538559c605bb1325f0728a1e497d7cadbb9b0a38[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Apr 28 22:00:52 2019 -0500
+
+    Update naming scheme, gitignore
+
+[33mcommit 759365dbe773abfd976e370076a8d3df30359b01[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Apr 28 21:44:18 2019 -0500
+
+    Initial commit of source
+
+[33mcommit e05d7c089a599ce2a4ee2401c62c5d2c5cf527b4[m
+Author: Matthew Tanner <tanner.matthew@gmail.com>
+Date:   Sun Apr 28 18:09:03 2019 -0500
+
+    Initial commit
