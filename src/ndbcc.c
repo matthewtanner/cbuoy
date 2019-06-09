@@ -23,7 +23,7 @@
 ****************************************************************************//*
 * @file
 *
-* @brief Implementation of cbuoy library
+* @brief Implementation of ndbc-c library
 *
 * @author Matthew Tanner
 ******************************************************************************/
@@ -45,7 +45,6 @@ const char	  *URL_STR_SPEC = "spec";
 const char	  *URL_STR_CWIND	 = "cwind";
 const char	  *NDBC_REALDATA_URL =
     "https://www.ndbc.noaa.gov/data/realtime2/";
-
 
 typedef struct
 {
@@ -196,11 +195,8 @@ int32_t ndbcc_get_data (ndbc_data_t *ndbc_data, ndbc_data_set_t data_set)
         free(response_str.ptr);
         return -1;
     }
-
+    
     status = parse_ndbc_data(ndbc_data, response_str, data_set);
-
-    //printf("%s\n", response_str.ptr);
-
     free(response_str.ptr);
     return status;
 }
@@ -233,5 +229,4 @@ int32_t ndbcc_get_all_data (ndbc_data_t *data)
 
     return 0;
 }
-
 
