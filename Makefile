@@ -5,7 +5,7 @@ INCDIR		:= include
 LIBTGT		:= $(LIBDIR)/libndbcc.a
 TESTTGT		:= $(TESTDIR)/test-ndbcc
 INCLUDES    := -I$(SRCDIR) -I$(INCDIR)
-TESTLIBS    := -L$(LIBDIR) -lndbcc -lcurl
+TESTLIBS    := -L$(LIBDIR) -lndbcc -lcurl -lssl -lcrypto
 CC			:= gcc
 CFLAGS		:= -Wall
 
