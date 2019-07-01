@@ -1,5 +1,5 @@
 # ndbc-cpp
-NDBC buoy data gathering library in C++
+NDBC buoy data gathering library in C
   
 See the NDBC Web Data Guide below for details on txt, spec and cwind data this
 library provides.      
